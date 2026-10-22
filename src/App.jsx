@@ -6,13 +6,21 @@ function App() {
     const [todoValue, setTodoValue] = useState("");
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        setTodoList([...todoList,todoValue])
+        // 함수에서 if문을 쓸 때는 된다/ 안된다를 판별하는 과정임
+        // 초보분들의 생각 흐름은 해야되는 일을 중심으로 if조건을 구성하게 됨
+        // 아래코드는 input 의 입력값이 ""이 아닐 때에만 정장을 해달라고 해야지~
+        // if (todoValue !== "") {
+        //    setTodoList([...todoList, todoValue])
+        //    setTodoValue("")'
+        // }
 
-        // 정상적으로 사용자가 입력한 todoValue가 todoList엔 들어감.
-        // 하지만, 저장이 끝난 인풋에 입력된 값은 사라지지 않고 계속 화면애 떠 있는 상황임 => 비워주면 좋겠음
-        // input에 바로 접근할 수는 없으니.
-        // state를 이용해서 todoValue의 값을 비워주고 그걸로 input의 입력값을 바꿔치기 하고 싶은데?
+        // if 문을 통해 된다 / 안된다를 판별할 때에는 안될 때를 탈락 시키는 코드 구성을 가져야 함
+        // YES를 진행한는 과정를 진행해야 함
+        event.preventDefault();
+        if (todoValue==="" || todoValue===" ") {
+            return;
+        }
+        setTodoList([...todoList,todoValue])
         setTodoValue("");
     }
 
@@ -23,18 +31,19 @@ function App() {
                 <input type={"text"}
                        placeholder={"write your to do..."}
                        onChange={(event) => {setTodoValue(event.target.value)}}
-                        // input의 value라는 속성이 사용자가 입력하는 값이 존재하게 되는 속성임
-                        // 평상시엔 이 아랫줄이 동작을 안 하다가, handleSubmit의 setTOdoValue를 통해
-                        //  todoValue의 값이 ""으로 변하는 순산 리액트는 아랫줄에""을 집어 넣음
                        value={todoValue}
                 />
                 <button type="submit">Add To Do</button>
             </form>
             <hr />
             <ul>
-                <li>더미</li>
-                <li>데이터</li>
-                <li>투두 추가</li>
+                {/*
+                    return 안에서 {} 를 통해 map()을 사용할 때에는
+                    반복되는 요소가 출력되기 때문에 그걸 리액트가 구분할 수 있도록
+                    key(중복되지 않는 값)를 리턴되는 최상위 요소에게 붙여줘야 함
+                    (익식표 개념)
+                */}
+                {todoList.map(item => <li>{item}</li>)}
             </ul>
         </>
     )
