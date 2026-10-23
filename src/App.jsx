@@ -14,6 +14,13 @@ function App() {
         setTodoValue("");
     }
 
+    const handleDeleteTodo = (target) => {
+        //delete todoList[(target)]
+       const result = todoList.filter((item, index) => {return target !== index});
+
+       setTodoList(result);
+    }
+
     return (
         <>
             <h1>My ToDo ({todoList.length})</h1>
@@ -27,7 +34,12 @@ function App() {
             </form>
             <hr />
             <ul>
-                {todoList.map(item => <li>{item}</li>)}
+                {todoList.map((item, index) =>
+                    <li key={index}> {item}
+                        <button onClick={() => {
+                            return handleDeleteTodo(index);
+                        }}>❌</button>
+                    </li>)}
             </ul>
         </>
     )
