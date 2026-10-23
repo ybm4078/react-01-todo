@@ -6,16 +6,6 @@ function App() {
     const [todoValue, setTodoValue] = useState("");
 
     const handleSubmit = (event) => {
-        // 함수에서 if문을 쓸 때는 된다/ 안된다를 판별하는 과정임
-        // 초보분들의 생각 흐름은 해야되는 일을 중심으로 if조건을 구성하게 됨
-        // 아래코드는 input 의 입력값이 ""이 아닐 때에만 정장을 해달라고 해야지~
-        // if (todoValue !== "") {
-        //    setTodoList([...todoList, todoValue])
-        //    setTodoValue("")'
-        // }
-
-        // if 문을 통해 된다 / 안된다를 판별할 때에는 안될 때를 탈락 시키는 코드 구성을 가져야 함
-        // YES를 진행한는 과정를 진행해야 함
         event.preventDefault();
         if (todoValue==="" || todoValue===" ") {
             return;
@@ -37,12 +27,6 @@ function App() {
             </form>
             <hr />
             <ul>
-                {/*
-                    return 안에서 {} 를 통해 map()을 사용할 때에는
-                    반복되는 요소가 출력되기 때문에 그걸 리액트가 구분할 수 있도록
-                    key(중복되지 않는 값)를 리턴되는 최상위 요소에게 붙여줘야 함
-                    (익식표 개념)
-                */}
                 {todoList.map(item => <li>{item}</li>)}
             </ul>
         </>
