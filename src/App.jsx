@@ -7,10 +7,12 @@ function App() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (todoValue==="" || todoValue===" ") {
+        const newText = todoValue.trim();
+        if (newText === "") {
             return;
         }
-        setTodoList([...todoList,todoValue])
+
+        setTodoList([...todoList,{text: newText, completed: false}]);
         setTodoValue("");
     }
 
@@ -19,6 +21,16 @@ function App() {
        const result = todoList.filter((item, index) => {return target !== index});
 
        setTodoList(result);
+    }
+
+    const handleToggleTodo = (index) => {
+        const newTodoList = todoList.map((item, i) => {
+            if (i !== index) {
+                return item;
+            }
+            return {...item, completed: !item.completed};
+        })
+        setTodoList(newTodoList);
     }
 
     return (
@@ -35,7 +47,11 @@ function App() {
             <hr />
             <ul>
                 {todoList.map((item, index) =>
-                    <li key={index}> {item}
+                    <li key={index}> {item.text}
+                        <button onClick={() => {
+                            {/*지금 현재의 completed 값을 반대로 저장*/}
+                            handleToggleTodo(index);
+                        }}>{item.completed ? "❤️" : "🤍"}</button>
                         <button onClick={() => {
                             return handleDeleteTodo(index);
                         }}>❌</button>
